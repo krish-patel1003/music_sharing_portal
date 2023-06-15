@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from accounts.models import User
 from music_upload.models import Music
 from music_upload.serializers import MusicUploadSerializer
+from music_upload.permissions import IsOwnerOrReadOnly
 # Create your views here.
 
 
@@ -58,3 +59,26 @@ class MusicListView(APIView):
         queryset = (public_music | private_music | protected_music).distinct()        
         serializer = self.serializer(queryset, many=True)
         return Response({"data":serializer.data, "message":"List of music"}, status=status.HTTP_200_OK)
+
+
+
+class MusicDetailView(RetrieveUpdateDestroyAPIView):
+
+    serializer_class = MusicUploadSerializer
+    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly, )
+    queryset = Music.objects.all()
+
+
+    def get(self, request, *args, **kwargs):
+
+        music = self.get_object()
+        serializer = self.serializer_class(music)
+        if music.upload_type == "PRO":
+            if request.user not in music.allowed_users.all():
+                return Response({"message": "You are not allowed to view this music."}, status=status.HTTP_403_FORBIDDEN)
+        
+        if music.upload_type == "PRI":
+            if request.user != music.user:
+                return Response({"message": "You are not allowed to view this music."}, status=status.HTTP_403_FORBIDDEN)
+        
+        return Response({"data":serializer.data, "message":"Music details"}, status=status.HTTP_200_OK)
