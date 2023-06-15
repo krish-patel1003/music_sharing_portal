@@ -32,8 +32,7 @@ SECRET_KEY = 'django-insecure-!giod4eh5w#pt$b+3pp^+xqbqxhhz#44e0m8upk2)t%1n26vq*
 DEBUG = True
 
 ALLOWED_HOSTS = ["127.0.0.1", 'music-sharing-portal.onrender.com']
-
-
+CORS_ALLOW_ALL_ORIGINS = True
 # Application definition
 
 INSTALLED_APPS = [
@@ -47,6 +46,7 @@ INSTALLED_APPS = [
     # third party apps
     'rest_framework',
     'rest_framework_simplejwt',
+    "corsheaders",
 
     # local apps
     'accounts',
@@ -63,6 +63,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = 'music_share.urls'
@@ -70,7 +71,9 @@ ROOT_URLCONF = 'music_share.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join("templates")
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

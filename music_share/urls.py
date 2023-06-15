@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/accounts/', include('accounts.urls')),
     path('api/music/', include('music_upload.urls')),
+    path('', include('frontend.urls')),
 ]

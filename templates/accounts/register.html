@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Registration Form</title>
+  </head>
+  <body>
+    <h1>Registration Form</h1>
+    <form id="registrationForm", method="POST">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required /><br /><br />
+
+      <label for="firstName">First Name:</label>
+      <input
+        type="text"
+        id="firstName"
+        name="first_name"
+        required
+      /><br /><br />
+
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" name="last_name" required /><br /><br />
+
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        required
+      /><br /><br />
+
+      <input type="submit" value="Register" />
+    </form>
+
+    <script>
+      document
+        .getElementById("registrationForm")
+        .addEventListener("submit",(event) => {
+          event.preventDefault(); // Prevent the form from submitting normally
+
+          var form = document.getElementById("registrationForm");
+          var formData = new FormData(form);
+
+          fetch(
+            "https://music-sharing-portal.onrender.com/api/accounts/register",
+            {
+              method: "POST",
+              body: formData,
+            }
+          )
+            .then((response) => {
+              if (response.ok) {
+                return response.json();
+              } else {
+                throw new Error("Error: " + response.status);
+              }
+            })
+            .then((data) => {
+              console.log(data); // Handle the response data
+            })
+            .catch((error) => {
+              console.error(error); // Handle any errors
+            });
+        });
+    </script>
+  </body>
+</html>
