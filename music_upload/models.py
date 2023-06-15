@@ -29,7 +29,7 @@ class Music(models.Model):
         default=PUBLIC,
     )
     uploaded_on = models.DateTimeField(auto_now_add=True)
-    allowed_users = models.ManyToManyField(User, related_name='allowed_users', null=True, blank=True)
+    allowed_users = models.ManyToManyField(User, related_name='allowed_users', blank=True)
 
 
     def __str__(self):
