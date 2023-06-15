@@ -5,7 +5,7 @@
   </head>
   <body>
     <h1>Registration Form</h1>
-    <form id="registrationForm", method="POST">
+    <form id="registrationForm" , method="POST">
       <label for="email">Email:</label>
       <input type="email" id="email" name="email" required /><br /><br />
 
@@ -34,7 +34,7 @@
     <script>
       document
         .getElementById("registrationForm")
-        .addEventListener("submit",(event) => {
+        .addEventListener("submit", (event) => {
           event.preventDefault(); // Prevent the form from submitting normally
 
           var form = document.getElementById("registrationForm");
@@ -48,7 +48,12 @@
             }
           )
             .then((response) => {
-              return response.json();
+              if (response.ok) {
+                return response.json();
+                window.location.href = "https://music-sharing-portal.onrender.com/api/accounts/login/";
+              } else {
+                throw new Error("Error: " + response.status);
+              }
             })
             .then((data) => {
               console.log(data); // Handle the response data

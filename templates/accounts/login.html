@@ -1,20 +1,55 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Login Form</title>
-</head>
-<body>
-  <h1>Login Form</h1>
-  <form id="loginForm">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required><br><br>
-  
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br><br>
-  
-    <input type="submit" value="Login">
-  </form>
+  <head>
+    <title>Login Form</title>
+  </head>
+  <body>
+    <h1>Login Form</h1>
+    <form id="loginForm">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required /><br /><br />
 
-  <script src="script.js"></script>
-</body>
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        required
+      /><br /><br />
+
+      <input type="submit" value="Login" />
+    </form>
+
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent the form from submitting normally
+
+          var form = document.getElementById("loginForm");
+          var formData = new FormData(form);
+
+          fetch(
+            "https://music-sharing-portal.onrender.com/api/accounts/login/",
+            {
+              method: "POST",
+              body: formData,
+            }
+          )
+            .then(function (response) {
+              if (response.ok) {
+                return response.json();
+              } else {
+                throw new Error("Error: " + response.status);
+              }
+            })
+            .then(function (data) {
+              console.log(data); // Handle the response data
+            })
+            .catch(function (error) {
+              console.error(error); // Handle any errors
+            });
+        });
+    </script>
+  </body>
 </html>
