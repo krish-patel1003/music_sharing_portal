@@ -36,17 +36,19 @@
               body: formData,
             }
           )
-            .then(function (response) {
+            .then((response) => {
               if (response.ok) {
                 return response.json();
               } else {
                 throw new Error("Error: " + response.status);
               }
             })
-            .then(function (data) {
+            .then((data) => {
+              res = data;
+              localStorage.setItem("token", res["data"]["tokens"]["access_token"])
               console.log(data); // Handle the response data
             })
-            .catch(function (error) {
+            .catch((error) => {
               console.error(error); // Handle any errors
             });
         });

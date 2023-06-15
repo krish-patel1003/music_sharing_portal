@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Song Submission Form</title>
+  </head>
+  <body>
+    <h1>Song Submission Form</h1>
+    <form id="songForm">
+      <label for="songName">Song Name:</label>
+      <input type="text" id="songName" name="song_name" required /><br /><br />
+
+      <label for="artist">Artist:</label>
+      <input type="text" id="artist" name="artist" required /><br /><br />
+
+      <label for="audio_file">Music File:</label>
+      <input
+        type="file"
+        id="musicFile"
+        name="audio_file"
+        required
+      /><br /><br />
+
+      <label for="uploadType">Upload Type:</label>
+      <select id="uploadType" name="upload_type">
+        <option value="PRI">Private</option>
+        <option value="PRO">Protected</option>
+        <option value="PUB">Public</option></select
+      ><br /><br />
+
+      <label for="email">Email:</label>
+      <select id="email" name="email" multiple>
+        <option value="example1@example.com">example1@example.com</option>
+        <option value="example2@example.com">example2@example.com</option>
+        <option value="example3@example.com">example3@example.com</option>
+      </select>
+      <input
+        type="text"
+        id="additionalEmail"
+        placeholder="Additional Email"
+      /><br /><br />
+
+      <input type="submit" value="Submit" />
+    </form>
+
+    <script>
+      document
+        .getElementById("songForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent the form from submitting normally
+
+          var form = document.getElementById("songForm");
+          var formData = new FormData(form);
+          console.log(formData);
+
+          var token = localStorage.getItem("token"); // Replace with your JWT Bearer token
+
+          var headers = new Headers();
+          headers.append("Authorization", "Bearer " + token);
+
+          fetch("https://music-sharing-portal.onrender.com/api/music/upload/", {
+            method: "POST",
+            headers: headers,
+            body: formData,
+          })
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+              console.log(data); // Handle the response data
+            })
+            .catch((error) => {
+              console.error(error); // Handle any errors
+            });
+        });
+    </script>
+  </body>
+</html>

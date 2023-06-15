@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Song List</title>
+    <style>
+      .card {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Song List</h1>
+    <div id="songList"></div>
+
+    <script>
+      var token = localStorage.getItem("token"); // Replace with your Bearer token
+      var headers = new Headers();
+      headers.append("Authorization", "Bearer " + token);
+
+      fetch("https://music-sharing-portal.onrender.com/api/music/list/", {
+        headers: headers,
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Error: " + response.status);
+          }
+        })
+        .then((data) => {
+          var songList = document.getElementById("songList");
+          songs = data["data"];
+
+          songs.forEach((song) => {
+            var card = document.createElement("div");
+            card.classList.add("card");
+
+            var songName = document.createElement("p");
+            songName.textContent = "Song Name: " + song.song_name;
+            card.appendChild(songName);
+
+            var artists = document.createElement("p");
+            artists.textContent = "Artists: " + song.artist;
+            card.appendChild(artists);
+
+            var audioFile = document.createElement("p");
+            audioFile.textContent = "Audio File: " + song.audio_file;
+            var audio = `
+                <audio controls>
+                    <source src=${song.audio_file} type="audio/mp3">
+                    Your browser does not support the audio element.
+                </audio>
+            `;
+            card.innerHTML += audio;
+
+            var uploadType = document.createElement("p");
+            uploadType.textContent = "Upload Type: " + song.upload_type;
+            card.appendChild(uploadType);
+
+            songList.appendChild(card);
+          });
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    </script>
+  </body>
+</html>

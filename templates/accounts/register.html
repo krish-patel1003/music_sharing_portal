@@ -50,7 +50,7 @@
             .then((response) => {
               if (response.ok) {
                 return response.json();
-                window.location.href = "https://music-sharing-portal.onrender.com/api/accounts/login/";
+                window.location = "https://music-sharing-portal.onrender.com/api/accounts/login/";
               } else {
                 throw new Error("Error: " + response.status);
               }
