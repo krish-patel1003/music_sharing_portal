@@ -6,7 +6,7 @@ document
     var form = document.getElementById("loginForm");
     var formData = new FormData(form);
 
-    fetch("https://music-sharing-portal.onrender.com/api/accounts/register", {
+    fetch("https://music-sharing-portal.onrender.com/api/accounts/register/", {
       method: "POST",
       body: formData,
     })
