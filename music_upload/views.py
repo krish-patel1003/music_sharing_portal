@@ -52,7 +52,7 @@ class MusicListView(APIView):
     def get(self, request):
 
         user = request.user
-        music = Music.objects.all()
+        music = Music.objects.all().order_by('-uploaded_on')
         public_music = music.filter(upload_type="PUB")
         private_music = music.filter(upload_type="PRI", user=user)
         protected_music = music.filter(upload_type="PRO", allowed_users=user)
