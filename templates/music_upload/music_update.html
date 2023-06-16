@@ -5,7 +5,7 @@
   </head>
   <body>
     <h1>Song Submission Form</h1>
-    <form id="songForm">
+    <form id="songForm" enctype="multipart/form-data">
         {{ form.as_p }}
       <input type="submit" value="Submit" />
     </form>
@@ -20,15 +20,14 @@
 
           var form = document.getElementById("songForm");
           var formData = new FormData(form);
-          console.log(formData);
 
           var token = localStorage.getItem("token"); // Replace with your JWT Bearer token
 
           var headers = new Headers();
           headers.append("Authorization", "Bearer " + token);
 
-          fetch("https://music-sharing-portal.onrender.com/api/music/upload/", {
-            method: "POST",
+          fetch(`https://music-sharing-portal.onrender.com/api/music/detail/{{music.id}}/`, {
+            method: "PATCH",
             headers: headers,
             body: formData,
           })
