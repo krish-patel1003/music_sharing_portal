@@ -19,6 +19,11 @@
 
     <script>
       var token = localStorage.getItem("token"); // Replace with your Bearer token
+      if (token == null){
+        alert("Please login first")
+        window.location.href = "https://music-sharing-portal.onrender.com/login/";
+      }
+
       var headers = new Headers();
       headers.append("Authorization", "Bearer " + token);
 

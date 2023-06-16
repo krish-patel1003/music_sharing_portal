@@ -5,12 +5,17 @@
   </head>
   <body>
     <h1>Song Submission Form</h1>
-    <h2>See the <a href="https://music-sharing-portal.onrender.com/music_list/">Music List</a>!</h2>
+    <h2>
+      See the
+      <a href="https://music-sharing-portal.onrender.com/music_list/"
+        >Music List</a
+      >!
+    </h2>
     <form id="songForm">
       {{ form.as_p }}
       <input type="submit" value="Submit" />
     </form>
-    
+
     <script>
       document
         .getElementById("songForm")
@@ -22,6 +27,11 @@
           console.log(formData);
 
           var token = localStorage.getItem("token"); // Replace with your JWT Bearer token
+          if (token == null) {
+            alert("Please login first");
+            window.location.href =
+              "https://music-sharing-portal.onrender.com/login/";
+          }
 
           var headers = new Headers();
           headers.append("Authorization", "Bearer " + token);
