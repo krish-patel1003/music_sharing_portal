@@ -82,3 +82,7 @@ class MusicDetailView(RetrieveUpdateDestroyAPIView):
                 return Response({"message": "You are not allowed to view this music."}, status=status.HTTP_403_FORBIDDEN)
         
         return Response({"data":serializer.data, "message":"Music details"}, status=status.HTTP_200_OK)
+
+    def update(self, request, *args, **kwargs):
+        print(request.data)
+        return super().update(request, *args, **kwargs)

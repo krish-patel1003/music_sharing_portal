@@ -20,7 +20,5 @@ def music_list(request):
 
 def music_update(request, id):
     music = Music.objects.get(id=id)
-    form = MusicUploadForm(instance=music)
-    print(music)
-
+    form = MusicUploadForm(request.POST or None, request.FILES or None, instance=music)
     return render(request, 'music_upload/music_update.html', {"form": form, "music": music})

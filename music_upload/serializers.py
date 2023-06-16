@@ -9,4 +9,3 @@ class MusicUploadSerializer(serializers.ModelSerializer):
         fields = (
             "id", "song_name", "artist", "audio_file", "upload_type", "allowed_users", "uploaded_on", "user")
         read_only_fields = ("id", "uploaded_on", "user")
-        

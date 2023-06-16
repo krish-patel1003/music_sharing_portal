@@ -5,13 +5,11 @@
   </head>
   <body>
     <h1>Song Submission Form</h1>
-    <form id="songForm" enctype="multipart/form-data">
-        {{ form.as_p }}
+    <form id="songForm" enctype="multipart/form-data" method="POST">
+      {{ form.as_p }}
       <input type="submit" value="Submit" />
     </form>
-    <form>
-        
-    </form>
+    <form></form>
     <script>
       document
         .getElementById("songForm")
@@ -20,26 +18,27 @@
 
           var form = document.getElementById("songForm");
           var formData = new FormData(form);
-
+          if (formData.get("audio_file").name == '') {
+            formData.delete("audio_file");
+          }
           var token = localStorage.getItem("token"); // Replace with your JWT Bearer token
 
           var headers = new Headers();
           headers.append("Authorization", "Bearer " + token);
 
-          fetch(`https://music-sharing-portal.onrender.com/api/music/detail/{{music.id}}/`, {
+          fetch(`http://127.0.0.1:8000/api/music/detail/{{music.id}}/`, {
             method: "PATCH",
             headers: headers,
             body: formData,
           })
             .then((response) => {
+              return response.json();
+              if (response.ok) {
                 return response.json();
-                if(response.ok){
-                    return response.json();
-                    form.reset();
-                }
-                else{
-                    throw new Error("Error: " + response.status);
-                }
+                form.reset();
+              } else {
+                throw new Error("Error: " + response.status);
+              }
             })
             .then((data) => {
               console.log(data); // Handle the response data
