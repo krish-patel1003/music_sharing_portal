@@ -5,13 +5,12 @@
   </head>
   <body>
     <h1>Song Submission Form</h1>
+    <h2>See the <a href="https://music-sharing-portal.onrender.com/music_list/">Music List</a>!</h2>
     <form id="songForm">
-        {{ form.as_p }}
+      {{ form.as_p }}
       <input type="submit" value="Submit" />
     </form>
-    <form>
-        
-    </form>
+    
     <script>
       document
         .getElementById("songForm")
@@ -33,14 +32,13 @@
             body: formData,
           })
             .then((response) => {
+              return response.json();
+              if (response.ok) {
                 return response.json();
-                if(response.ok){
-                    return response.json();
-                    form.reset();
-                }
-                else{
-                    throw new Error("Error: " + response.status);
-                }
+                form.reset();
+              } else {
+                throw new Error("Error: " + response.status);
+              }
             })
             .then((data) => {
               console.log(data); // Handle the response data

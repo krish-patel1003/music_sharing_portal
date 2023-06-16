@@ -31,6 +31,8 @@
       <input type="submit" value="Register" />
     </form>
 
+    <p><a href="https://music-sharing-portal.onrender.com/login/">login</a></p>
+
     <script>
       document
         .getElementById("registrationForm")
@@ -50,13 +52,17 @@
             .then((response) => {
               if (response.ok) {
                 return response.json();
-                window.location = "https://music-sharing-portal.onrender.com/api/accounts/login/";
+                form.reset();  
               } else {
+                form.reset();
+                document.getElementsByTagName(body).append("Error: " + response.status + "Try Again! check request in Network tab for error details");
                 throw new Error("Error: " + response.status);
               }
             })
             .then((data) => {
               console.log(data); // Handle the response data
+              document.location.href = "https://music-sharing-portal.onrender.com/login/";
+              return false;
             })
             .catch((error) => {
               console.error(error); // Handle any errors

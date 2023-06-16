@@ -19,7 +19,7 @@
 
       <input type="submit" value="Login" />
     </form>
-
+    <p>Don't have an account <a href="https://music-sharing-portal.onrender.com/register/">register</a>!</p>
     <script>
       document
         .getElementById("loginForm")
@@ -39,6 +39,7 @@
             .then((response) => {
               if (response.ok) {
                 return response.json();
+                form.reset();
               } else {
                 throw new Error("Error: " + response.status);
               }
@@ -47,6 +48,7 @@
               res = data;
               localStorage.setItem("token", res["data"]["tokens"]["access_token"])
               console.log(data); // Handle the response data
+              document.location.href = "https://music-sharing-portal.onrender.com/music_list/";
             })
             .catch((error) => {
               console.error(error); // Handle any errors
