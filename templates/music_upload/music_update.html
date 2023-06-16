@@ -26,7 +26,7 @@
           var headers = new Headers();
           headers.append("Authorization", "Bearer " + token);
 
-          fetch(`http://127.0.0.1:8000/api/music/detail/{{music.id}}/`, {
+          fetch(`https://music-sharing-portal.onrender.com/api/music/detail/{{music.id}}/`, {
             method: "PATCH",
             headers: headers,
             body: formData,
