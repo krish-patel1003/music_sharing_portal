@@ -4,6 +4,8 @@ from music_upload.models import Music
 
 # Create your views here.
 
+def home(request):
+    return render(request, 'api/index.html')
 
 def register(request):
     return render(request, 'accounts/register.html')
