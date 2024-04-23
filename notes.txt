@@ -1,1 +1,2 @@
-This is a tes document.
+This is a test document.
+NEW FEATURE
